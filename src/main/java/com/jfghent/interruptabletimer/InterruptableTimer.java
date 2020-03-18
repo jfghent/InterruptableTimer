@@ -23,10 +23,12 @@ public class InterruptableTimer extends InterruptableTask{
     public InterfaceVoid if_onPause;
     public InterfaceVoid if_onStart;
     public InterfaceVoid if_onFinish;
+    public InterfaceVoid if_onFinal;
     
-    public InterruptableTimer(String TaskName, long Time) {
+    public InterruptableTimer(String TaskName, long Time, InterfaceVoid onfinal) {
         super(TaskName);
         SetTimer(Time);
+        if_onFinal = onfinal;
     }
 
     final public long LocalNow(){
@@ -58,14 +60,17 @@ public class InterruptableTimer extends InterruptableTask{
         }catch(InterruptedException e){
             //if_onInterrupt.run();
         }
-        onfinish();
-
+        if_onFinish.run();
+        if_onFinal.run();
+        //onfinish();
     }
+    
     
     @Override
     public void oncancel(){
         SetTimer(0);
         if_onCancel.run();
+        if_onFinal.run();
     }
     
     @Override
@@ -84,5 +89,7 @@ public class InterruptableTimer extends InterruptableTask{
     @Override
     public void onfinish(){
         if_onFinish.run();
+        
     }
+    
 }

@@ -11,5 +11,5 @@ package com.jfghent.interruptabletimer;
  */
 @FunctionalInterface
 public interface InterfaceVoid {
-    void run();// throws MqttException;
+    public void run();
 }
